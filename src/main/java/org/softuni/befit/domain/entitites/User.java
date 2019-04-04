@@ -3,6 +3,8 @@ package org.softuni.befit.domain.entitites;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -12,10 +14,12 @@ public class User extends BaseEntity implements UserDetails {
     private String username;
     private String password;
     private String email;
+    private List<Note> notes;
 
     private Set<Role> authorities;
 
     public User() {
+        this.notes = new ArrayList<>();
     }
 
     @Override
@@ -45,6 +49,15 @@ public class User extends BaseEntity implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @OneToMany
+    public List<Note> getNotes() {
+        return this.notes;
+    }
+
+    public void setNotes(List<Note> notes) {
+        this.notes = notes;
     }
 
     @Override
@@ -91,5 +104,6 @@ public class User extends BaseEntity implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }
 

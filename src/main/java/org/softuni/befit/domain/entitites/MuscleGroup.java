@@ -2,22 +2,20 @@ package org.softuni.befit.domain.entitites;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.List;
 
 @Entity
-@Table(name = "notes")
-public class Note extends BaseEntity {
-
+@Table(name = "muscle_groups")
+public class MuscleGroup extends BaseEntity {
 
     private String description;
-    private Exercise exercises;
+    private List<Exercise> exercises;
 
-    public Note() {
-    }
+    public MuscleGroup() { }
 
-
-    @Column(name = "descriptions", nullable = false)
+    @Column(name = "description")
     public String getDescription() {
         return this.description;
     }
@@ -26,12 +24,12 @@ public class Note extends BaseEntity {
         this.description = description;
     }
 
-    @ManyToOne(targetEntity = Exercise.class)
-    public Exercise getExercises() {
+    @OneToMany(targetEntity = Exercise.class)
+    public List<Exercise> getExercises() {
         return this.exercises;
     }
 
-    public void setExercises(Exercise exercises) {
+    public void setExercises(List<Exercise> exercises) {
         this.exercises = exercises;
     }
 }

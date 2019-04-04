@@ -1,6 +1,14 @@
 package org.softuni.befit.domain.models.binding;
 
+import org.springframework.stereotype.Component;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+@Component
 public class UserRegisterBindingModel {
+
 
     private String username;
     private String password;
@@ -10,6 +18,7 @@ public class UserRegisterBindingModel {
     public UserRegisterBindingModel() {
     }
 
+    @NotEmpty
     public String getUsername() {
         return username;
     }
@@ -18,6 +27,7 @@ public class UserRegisterBindingModel {
         this.username = username;
     }
 
+    @NotEmpty
     public String getPassword() {
         return password;
     }
@@ -26,6 +36,7 @@ public class UserRegisterBindingModel {
         this.password = password;
     }
 
+    @NotEmpty
     public String getConfirmPassword() {
         return confirmPassword;
     }
@@ -34,6 +45,8 @@ public class UserRegisterBindingModel {
         this.confirmPassword = confirmPassword;
     }
 
+    @NotEmpty
+    @Email
     public String getEmail() {
         return email;
     }

@@ -10,9 +10,11 @@ import org.softuni.befit.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,12 +40,15 @@ public class UserController extends BaseController {
 
     @PostMapping("/register")
     @PreAuthorize("isAnonymous()")
-    public ModelAndView registerConfirm(@ModelAttribute UserRegisterBindingModel model) {
-        if (!model.getPassword().equals(model.getConfirmPassword())) {
+    public ModelAndView registerConfirm(@ModelAttribute @Valid UserRegisterBindingModel model,
+                                        Errors errors) {
+        if (!model.getPassword().equals(model.getConfirmPassword()) ||
+                errors.hasErrors()) {
             return super.view("register");
         }
 
-        this.userService.registerUser(this.modelMapper.map(model, UserServiceModel.class));
+        UserServiceModel userServiceModel = this.modelMapper.map(model, UserServiceModel.class);
+        this.userService.registerUser(userServiceModel);
 
         return super.redirect("/login");
     }

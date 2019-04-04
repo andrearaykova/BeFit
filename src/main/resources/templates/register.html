@@ -2,16 +2,18 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <th:block th:include="~{fragments/head}"></th:block>
+    <th:block th:include="~{fragments/head}"/>
+    <script th:src="@{/js/registerValidation.js}"></script>
 </head>
 <body>
 <header>
-    <th:block th:include="~{fragments/navbar}"></th:block>
+    <th:block th:include="~{fragments/navbar}"/>
 </header>
 <main class="mt-3">
     <h1 class="text-center text-dark">Register</h1>
     <hr class="hr-2 bg-dark w-25">
-    <form class="form w-25 mx-auto" th:action="@{/users/register}" th:method="post"><input type="hidden" name="_csrf" value="c95ccb2b-1afa-47bd-bf7b-a5b72739470b">
+    <form id="form" class="form w-25 mx-auto" th:action="@{/users/register}" th:method="post">
+        <input type="hidden" name="_csrf" value="c95ccb2b-1afa-47bd-bf7b-a5b72739470b">
         <div class="form-group">
             <label for="username" class="font-weight-bold">Username</label>
             <input type="text" class="form-control" id="username" placeholder="Username..." name="username">
@@ -35,7 +37,7 @@
     </form>
 </main>
 <footer>
-    <th:block th:include="~{fragments/footer}"></th:block>
+    <th:block th:include="~{fragments/footer}"/>
 </footer>
 </body>
 </html>

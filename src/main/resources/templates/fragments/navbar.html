@@ -1,19 +1,12 @@
-<th:block xmlns:th="http://www.w3.org/1999/xhtml">
-    <th:block sec:authorize="isAnonymous()" xmlns:th="http://www.w3.org/1999/xhtml">
-        <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="guessNav">
+<th:block>
+    <th:block sec:authorize="isAnonymous()">
+        <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
             <div class="container">
                 <a class="navbar-brand js-scroll-trigger" th:href="@{/}">Be Fit</a>
-                <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded"
-                        type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    Menu
-                    <i class="fas fa-bars"></i>
-                </button>
-                <div class="collapse navbar-collapse" id="guessNavbarResponsive">
+                <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item mx-0 mx-lg-1">
-                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                               th:href="@{/}">Home</a>
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" th:href="@{/}">Home</a>
                         </li>
                         <li class="nav-item mx-0 mx-lg-1">
                             <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" th:href="@{/users/login}">Login</a>
@@ -27,50 +20,4 @@
             </div>
         </nav>
     </th:block>
-
-    <th:block sec:authorize="isAuthenticated()">
-        <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
-            <div class="container">
-                <a class="navbar-brand js-scroll-trigger" th:href="@{/home}">Start Bootstrap</a>
-                <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    Menu
-                    <i class="fas fa-bars"></i>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ml-auto">
-                        <!--<li class="nav-item mx-0 mx-lg-1">-->
-                            <!--<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" th:href="@{/}">Portfolio</a>-->
-                        <!--</li>-->
-                        <!--<li class="nav-item mx-0 mx-lg-1">-->
-                            <!--<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">About</a>-->
-                        <!--</li>-->
-                        <!--<li class="nav-item mx-0 mx-lg-1">-->
-                            <!--<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact">Contact</a>-->
-                        <!--</li>-->
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </th:block>
-
-    <th:block sec:authorize="hasRole('ROLE_ADMIN')">
-        <li class="nav-item active">
-            <div class="dropdown">
-                <a class="nav-link active dropdown-toggle" href="#" role="button" id="adminDropdown"
-                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Admin
-                </a>
-                <div class="dropdown-menu" aria-labelledby="adminDropdown">
-                    <a class="dropdown-item" th:href="@{/users/all}">All Users</a>
-                </div>
-            </div>
-        </li>
-    </th:block>
-    <li class="nav-item active">
-        <form action="/logout?login" method="post"><input type="hidden" name="_csrf"
-                                                          value="80417983-fe8b-45c7-963e-31f6915a1560">
-            <button class="logout-button nav-link">Logout</button>
-        </form>
-    </li>
-
 </th:block>
