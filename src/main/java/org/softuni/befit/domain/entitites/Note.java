@@ -9,7 +9,6 @@ import javax.persistence.Table;
 @Table(name = "notes")
 public class Note extends BaseEntity {
 
-
     private String description;
     private Exercise exercises;
 
