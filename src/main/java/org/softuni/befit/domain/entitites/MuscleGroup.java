@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,7 +14,9 @@ public class MuscleGroup extends BaseEntity {
     private String name;
     private List<Exercise> exercises;
 
-    public MuscleGroup() { }
+    public MuscleGroup() {
+        this.exercises = new ArrayList<>();
+    }
 
     @Column(nullable = false)
     public String getName() {

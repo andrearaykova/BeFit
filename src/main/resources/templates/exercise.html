@@ -7,16 +7,18 @@
 <header>
     <th:block th:include="~{fragments/navbar}"/>
 </header>
-<main>
+<main class="mt-3">
     <div class="list-group">
-        <a href="#" class="list-group-item list-group-item-action active">
-            Cras justo odio
-        </a>
-        <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
-        <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
-        <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
-        <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>
+        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+           th:href="@{/musclegroup/add}">Add Muscle Group</a>
+
+        <th:block th:each="musclegroup, iter : ${model}">
+            <a th:utext="${musclegroup.name}" href="#" class="list-group-item list-group-item-action active">
+
+            </a>
+        </th:block>
     </div>
+    <p>Az sum Suncho, idvam ot gorichka..........</p>
 </main>
 <footer>
     <th:block th:include="~{fragments/footer}"/>

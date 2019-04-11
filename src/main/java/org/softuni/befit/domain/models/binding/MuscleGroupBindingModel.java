@@ -1,5 +1,6 @@
 package org.softuni.befit.domain.models.binding;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 public class MuscleGroupBindingModel {
@@ -10,6 +11,7 @@ public class MuscleGroupBindingModel {
     public MuscleGroupBindingModel() {
     }
 
+    @NotEmpty
     public String getName() {
         return this.name;
     }

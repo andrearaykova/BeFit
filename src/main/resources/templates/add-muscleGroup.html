@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:include="~{fragments/head}"/>
+</head>
+<body>
+<header>
+    <th:block th:include="~{fragments/navbar}"/>
+</header>
+<main>
+    <form id="add-product-form" class="form mt-3 w-25 mx-auto" th:action="@{/musclegroup/add}" method="post">
+        <div class="form-group">
+            <label for="add-product-name" class="font-weight-bold">Name</label>
+            <input type="text" class="form-control text-center" id="add-product-name" name="name">
+        </div>
+        <input type="submit" class="btn btn-outline-secondary" value="Add"/>
+    </form>
+</main>
+<footer>
+    <th:block th:include="~{fragments/footer}"/>
+</footer>
+</body>
+</html>
