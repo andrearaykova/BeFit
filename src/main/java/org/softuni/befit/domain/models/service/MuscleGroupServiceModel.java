@@ -4,18 +4,18 @@ import java.util.List;
 
 public class MuscleGroupServiceModel extends BaseServiceModel {
 
-    private String description;
+    private String name;
     private List<ExerciseServiceModel> exercises;
 
     public MuscleGroupServiceModel() {
     }
 
-    public String getDescription() {
-        return this.description;
+    public String getName() {
+        return this.name;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<ExerciseServiceModel> getExercises() {

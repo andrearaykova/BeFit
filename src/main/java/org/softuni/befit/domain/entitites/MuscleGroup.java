@@ -10,18 +10,18 @@ import java.util.List;
 @Table(name = "muscle_groups")
 public class MuscleGroup extends BaseEntity {
 
-    private String description;
+    private String name;
     private List<Exercise> exercises;
 
     public MuscleGroup() { }
 
-    @Column(name = "description")
-    public String getDescription() {
-        return this.description;
+    @Column(nullable = false)
+    public String getName() {
+        return this.name;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @OneToMany(targetEntity = Exercise.class)

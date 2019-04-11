@@ -4,18 +4,18 @@ import java.util.List;
 
 public class MuscleGroupViewModel {
 
-    private String description;
+    private String name;
     private List<ExerciseViewModel> exercises;
 
     public MuscleGroupViewModel() {
     }
 
-    public String getDescription() {
-        return this.description;
+    public String getName() {
+        return this.name;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<ExerciseViewModel> getExercises() {

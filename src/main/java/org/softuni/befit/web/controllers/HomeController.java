@@ -10,12 +10,10 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class HomeController extends BaseController {
 
-   // private final CategoryService categoryService;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public HomeController( ModelMapper modelMapper) {
-      //  this.categoryService = categoryService;
+    public HomeController(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }
 
@@ -28,8 +26,6 @@ public class HomeController extends BaseController {
     @GetMapping("/home")
     @PreAuthorize("isAuthenticated()")
     public ModelAndView home(ModelAndView modelAndView) {
-       // modelAndView.addObject("categories", this.categoryService.findAllCategories().stream().map(category -> this.modelMapper.map(category, CategoryViewModel.class)).collect(Collectors.toList()));
-
         return super.view("home", modelAndView);
     }
 }
