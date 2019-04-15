@@ -1,10 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <th:block th:include="~{fragments/head}"/>
 </head>
 <body>
+<header>
+    <th:block th:include="~{fragments/navbar}"/>
+</header>
+<main class="mt-3">
+    <div class="list-group">
+        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+           th:href="@{/exercise/add}">Add Note</a>
 
+        <th:block th:each="exercise, iter : ${model}">
+            <a th:utext="${exercise.name}" href="#" class="list-group-item list-group-item-action active"></a>
+            <a th:utext="${exercise.description}" href="#" class="list-group-item list-group-item-action active"></a>
+            <a th:utext="${exercise.videoURL}" href="#" class="list-group-item list-group-item-action active"></a>
+        </th:block>
+    </div>
+</main>
+<footer>
+    <th:block th:include="~{fragments/footer}"/>
+</footer>
 </body>
 </html>

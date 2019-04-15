@@ -5350,7 +5350,7 @@ a.badge-dark:focus, a.badge-dark.focus {
   position: relative;
   display: block;
   padding: 0.75rem 1.25rem;
-  margin-bottom: -1px;
+  /*margin-bottom: -1px;*/
   background-color: #fff;
   border: 1px solid rgba(0, 0, 0, 0.125);
 }
@@ -5374,9 +5374,9 @@ a.badge-dark:focus, a.badge-dark.focus {
 
 .list-group-item.active {
   z-index: 2;
-  color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
+  /*color: #fff;*/
+  /*background-color: #007bff;*/
+  /*border-color: #007bff;*/
 }
 
 .list-group-horizontal {
