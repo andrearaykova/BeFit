@@ -13,7 +13,7 @@
            th:href="@{/musclegroup/add}">Add Muscle Group</a>
 
         <th:block th:each="musclegroup, iter : ${model}">
-            <a th:utext="${musclegroup.name}" href="#" class="list-group-item list-group-item-action active">
+            <a th:utext="${musclegroup.name}" th:href="@{|/exercise/${musclegroup.id}|}" class="list-group-item list-group-item-action active">
 
             </a>
         </th:block>

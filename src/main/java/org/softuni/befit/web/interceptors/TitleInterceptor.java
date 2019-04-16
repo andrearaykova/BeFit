@@ -1,6 +1,7 @@
 package org.softuni.befit.web.interceptors;
 
 
+import org.softuni.befit.web.annotations.PageTitle;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,12 +21,12 @@ public class TitleInterceptor extends HandlerInterceptorAdapter {
             modelAndView = new ModelAndView();
         } else {
             if (handler instanceof HandlerMethod) {
-//                PageTitle methodAnnotation = ((HandlerMethod) handler).getMethodAnnotation(PageTitle.class);
+                PageTitle methodAnnotation = ((HandlerMethod) handler).getMethodAnnotation(PageTitle.class);
 
-//                if (methodAnnotation != null) {
-//                    modelAndView
-//                            .addObject("title", title + " - " + methodAnnotation.value());
-//                }
+                if (methodAnnotation != null) {
+                    modelAndView
+                            .addObject("title", title + " - " + methodAnnotation.value());
+                }
             }
         }
     }

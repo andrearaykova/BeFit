@@ -2,9 +2,7 @@ package org.softuni.befit.service;
 
 import org.modelmapper.ModelMapper;
 import org.softuni.befit.domain.entitites.Exercise;
-import org.softuni.befit.domain.entitites.MuscleGroup;
 import org.softuni.befit.domain.models.service.ExerciseServiceModel;
-import org.softuni.befit.domain.models.service.MuscleGroupServiceModel;
 import org.softuni.befit.repository.ExerciseRepository;
 import org.springframework.stereotype.Service;
 

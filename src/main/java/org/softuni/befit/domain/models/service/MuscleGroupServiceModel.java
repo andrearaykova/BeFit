@@ -4,10 +4,21 @@ import java.util.List;
 
 public class MuscleGroupServiceModel extends BaseServiceModel {
 
+    private String id;
     private String name;
-    private List<ExerciseServiceModel> exercises;
+
 
     public MuscleGroupServiceModel() {
+    }
+
+    @Override
+    public String getId() {
+        return this.id;
+    }
+
+    @Override
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -16,13 +27,5 @@ public class MuscleGroupServiceModel extends BaseServiceModel {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<ExerciseServiceModel> getExercises() {
-        return this.exercises;
-    }
-
-    public void setExercises(List<ExerciseServiceModel> exercises) {
-        this.exercises = exercises;
     }
 }

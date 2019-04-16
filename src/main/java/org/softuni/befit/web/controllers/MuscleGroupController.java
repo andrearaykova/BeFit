@@ -5,6 +5,7 @@ import org.softuni.befit.domain.models.binding.MuscleGroupBindingModel;
 import org.softuni.befit.domain.models.service.MuscleGroupServiceModel;
 import org.softuni.befit.domain.models.view.MuscleGroupViewModel;
 import org.softuni.befit.service.MuscleGroupService;
+import org.softuni.befit.web.annotations.PageTitle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -34,6 +35,7 @@ public class MuscleGroupController extends BaseController {
 
     @GetMapping()
     @PreAuthorize("isAuthenticated()")
+    @PageTitle("Muscle Group")
     public ModelAndView exercise(ModelAndView modelAndView) {
 
         List<MuscleGroupServiceModel> muscleGroupServiceModels = muscleGroupService.findAll();
@@ -42,11 +44,12 @@ public class MuscleGroupController extends BaseController {
                 .collect(Collectors.toList());
 
         modelAndView.addObject("model", muscleGroupViewModels);
-        return view("exercise", modelAndView);
+        return view("muscleGroup ", modelAndView);
     }
 
     @GetMapping("/add")
     @PreAuthorize("isAuthenticated()")
+    @PageTitle("Add Muscle Group")
     public ModelAndView showMuscleGroupView() {
         return view("add-muscleGroup");
     }

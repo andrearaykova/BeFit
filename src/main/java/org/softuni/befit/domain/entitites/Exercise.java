@@ -11,6 +11,7 @@ public class Exercise extends BaseEntity {
     private String name;
     private String description;
     private String videoURL;
+    private String muscleGroup;
 
     public Exercise() {
     }
@@ -40,5 +41,14 @@ public class Exercise extends BaseEntity {
 
     public void setVideoURL(String videoURL) {
         this.videoURL = videoURL;
+    }
+
+    @Column(name = "muscle_group", nullable = false, unique = true)
+    public String getMuscleGroup() {
+        return this.muscleGroup;
+    }
+
+    public void setMuscleGroup(String muscleGroup) {
+        this.muscleGroup = muscleGroup;
     }
 }

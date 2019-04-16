@@ -7,6 +7,8 @@ import org.softuni.befit.repository.MuscleGroupRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,6 +41,14 @@ public class MuscleGroupServiceImpl implements MuscleGroupService {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public MuscleGroupServiceModel findById(String id) {
+        MuscleGroup muscleGroup = muscleGroupRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Muscle group not found"));
+       return this.modelMapper.map(muscleGroup, MuscleGroupServiceModel.class);
+
     }
 
 }

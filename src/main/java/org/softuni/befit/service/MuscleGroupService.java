@@ -9,4 +9,6 @@ public interface MuscleGroupService {
     List<MuscleGroupServiceModel> findAll();
 
     boolean save(MuscleGroupServiceModel muscleGroupServiceModel);
+
+    MuscleGroupServiceModel findById(String id);
 }

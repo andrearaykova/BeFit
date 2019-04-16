@@ -4,19 +4,30 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.text.DateFormat;
 
 @Entity
 @Table(name = "notes")
 public class Note extends BaseEntity {
 
+    private String name;
     private String description;
-    private Exercise exercises;
+
+
 
     public Note() {
     }
 
+    @Column(name = "name", nullable = false)
+    public String getName() {
+        return this.name;
+    }
 
-    @Column(name = "descriptions", nullable = false)
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Column(name = "descriptions", nullable = false, columnDefinition = "TEXT")
     public String getDescription() {
         return this.description;
     }
@@ -25,12 +36,4 @@ public class Note extends BaseEntity {
         this.description = description;
     }
 
-    @ManyToOne(targetEntity = Exercise.class)
-    public Exercise getExercises() {
-        return this.exercises;
-    }
-
-    public void setExercises(Exercise exercises) {
-        this.exercises = exercises;
-    }
 }
