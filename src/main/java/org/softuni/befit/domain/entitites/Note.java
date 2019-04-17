@@ -27,7 +27,7 @@ public class Note extends BaseEntity {
         this.name = name;
     }
 
-    @Column(name = "descriptions", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     public String getDescription() {
         return this.description;
     }

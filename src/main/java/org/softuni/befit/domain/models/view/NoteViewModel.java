@@ -4,7 +4,6 @@ public class NoteViewModel {
 
     private String name;
     private String description;
-    private ExerciseViewModel exercises;
 
     public NoteViewModel() {
     }
@@ -25,11 +24,4 @@ public class NoteViewModel {
         this.description = description;
     }
 
-    public ExerciseViewModel getExercises() {
-        return this.exercises;
-    }
-
-    public void setExercises(ExerciseViewModel exercises) {
-        this.exercises = exercises;
-    }
 }

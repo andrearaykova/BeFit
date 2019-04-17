@@ -6,7 +6,6 @@ public class NoteBindingModel {
 
     private String name;
     private String description;
-    private ExerciseBindingModel exercises;
 
     public NoteBindingModel() {
     }
@@ -27,11 +26,4 @@ public class NoteBindingModel {
         this.description = description;
     }
 
-    public ExerciseBindingModel getExercises() {
-        return this.exercises;
-    }
-
-    public void setExercises(ExerciseBindingModel exercises) {
-        this.exercises = exercises;
-    }
 }

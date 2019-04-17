@@ -4,7 +4,6 @@ public class NoteServiceModel extends BaseServiceModel {
 
     private String name;
     private String description;
-    private ExerciseServiceModel exercises;
 
     public NoteServiceModel() {
     }
@@ -25,11 +24,4 @@ public class NoteServiceModel extends BaseServiceModel {
         this.description = description;
     }
 
-    public ExerciseServiceModel getExercises() {
-        return this.exercises;
-    }
-
-    public void setExercises(ExerciseServiceModel exercises) {
-        this.exercises = exercises;
-    }
 }

@@ -11,4 +11,8 @@ public interface MuscleGroupService {
     boolean save(MuscleGroupServiceModel muscleGroupServiceModel);
 
     MuscleGroupServiceModel findById(String id);
+
+    MuscleGroupServiceModel editMuscleGroup(String id, MuscleGroupServiceModel muscleGroupServiceModel);
+
+    boolean deleteMuscleGroup(String id);
 }

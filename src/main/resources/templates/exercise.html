@@ -10,12 +10,11 @@
 <main class="mt-3">
     <div class="list-group">
         <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-           th:href="@{/musclegroup/add}">Add Muscle Group</a>
+           th:href="@{/exercise/add}">Add Exercise</a>
 
-        <th:block th:each="musclegroup, iter : ${model}">
-            <a th:utext="${musclegroup.name}" th:href="@{|/exercise/${musclegroup.id}|}" class="list-group-item list-group-item-action active">
-
-            </a>
+        <th:block th:each="exercise, iter : ${model}">
+            <a th:utext="${exercise.name}" href="#" class="list-group-item list-group-item-action active"></a>
+            <!--<a th:utext="${note.description}" href="#" class="list-group-item list-group-item-action active"></a>-->
         </th:block>
     </div>
 </main>
