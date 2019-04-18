@@ -36,7 +36,7 @@ public class NoteController extends BaseController {
         this.noteService = noteService;
     }
 
-    @GetMapping()
+    @GetMapping("")
     @PreAuthorize("isAuthenticated()")
     @PageTitle("Note")
     public ModelAndView note(ModelAndView modelAndView) {

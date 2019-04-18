@@ -13,10 +13,12 @@ import java.util.stream.Collectors;
 public class ExerciseServiceImpl implements ExerciseService {
 
     private final ExerciseRepository exerciseRepository;
+    private final MuscleGroupService muscleGroupService;
     private final ModelMapper modelMapper;
 
-    public ExerciseServiceImpl(ExerciseRepository exerciseRepository, ModelMapper modelMapper) {
+    public ExerciseServiceImpl(ExerciseRepository exerciseRepository, MuscleGroupService muscleGroupService, ModelMapper modelMapper) {
         this.exerciseRepository = exerciseRepository;
+        this.muscleGroupService = muscleGroupService;
         this.modelMapper = modelMapper;
     }
 
@@ -32,6 +34,7 @@ public class ExerciseServiceImpl implements ExerciseService {
     @Override
     public boolean save(ExerciseServiceModel exerciseServiceModel) {
         Exercise exercise = this.modelMapper.map(exerciseServiceModel, Exercise.class);
+
 
         try {
             exerciseRepository.save(exercise);

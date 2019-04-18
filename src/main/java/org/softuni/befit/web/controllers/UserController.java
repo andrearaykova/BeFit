@@ -3,6 +3,7 @@ package org.softuni.befit.web.controllers;
 import org.modelmapper.ModelMapper;
 import org.softuni.befit.domain.models.binding.UserEditBindingModel;
 import org.softuni.befit.domain.models.binding.UserRegisterBindingModel;
+import org.softuni.befit.domain.models.service.UserRegisterServiceModel;
 import org.softuni.befit.domain.models.service.UserServiceModel;
 import org.softuni.befit.domain.models.view.UserAllViewModel;
 import org.softuni.befit.domain.models.view.UserProfileViewModel;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,14 +43,14 @@ public class UserController extends BaseController {
     @PostMapping("/register")
     @PreAuthorize("isAnonymous()")
     public ModelAndView registerConfirm(@ModelAttribute @Valid UserRegisterBindingModel model,
-                                        Errors errors) {
+                                        Errors errors) throws IOException {
         if (!model.getPassword().equals(model.getConfirmPassword()) ||
                 errors.hasErrors()) {
             return super.view("register");
         }
 
-        UserServiceModel userServiceModel = this.modelMapper.map(model, UserServiceModel.class);
-        this.userService.registerUser(userServiceModel);
+        UserRegisterServiceModel userRegisterServiceModel = this.modelMapper.map(model, UserRegisterServiceModel.class);
+        this.userService.registerUser(userRegisterServiceModel);
 
         return super.redirect("/login");
     }

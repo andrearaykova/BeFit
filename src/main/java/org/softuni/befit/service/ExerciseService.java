@@ -11,4 +11,6 @@ public interface ExerciseService {
     List<ExerciseServiceModel> findAll();
 
     boolean save(ExerciseServiceModel exerciseServiceModel);
+
+
 }

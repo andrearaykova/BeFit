@@ -12,7 +12,7 @@
 <main class="mt-3">
     <h1 class="text-center text-dark">Register</h1>
     <hr class="hr-2 bg-dark w-25">
-    <form id="form" class="form w-25 mx-auto" th:action="@{/users/register}" th:method="post">
+    <form id="form" class="form w-25 mx-auto" th:action="@{/users/register}" th:method="post" enctype="multipart/form-data">
         <input type="hidden" name="_csrf" value="c95ccb2b-1afa-47bd-bf7b-a5b72739470b">
         <div class="form-group">
             <label for="username" class="font-weight-bold">Username</label>
@@ -30,10 +30,16 @@
             <label for="email" class="font-weight-bold">Email</label>
             <input type="email" class="form-control" id="email" placeholder="Email..." name="email">
         </div>
+        <div class="form-item">
+            <input type="file" name="image" accept="image/*">
+        </div>
+
         <hr class="hr-2 bg-dark">
         <div class="button-holder d-flex justify-content-center">
             <button type="submit" class="btn btn-dark">Register</button>
         </div>
+
+
     </form>
 </main>
 <footer>

@@ -7,8 +7,8 @@ import org.softuni.befit.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class RoleServiceImpl implements RoleService {
@@ -46,15 +46,12 @@ public class RoleServiceImpl implements RoleService {
 
 
     @Override
-    public Set<RoleServiceModel> findAllRoles() {
-        return this.roleRepository.findAll()
-                .stream()
-                .map(r -> this.modelMapper.map(r, RoleServiceModel.class))
-                .collect(Collectors.toSet());
+    public Set<Role> findAllRoles() {
+        return new HashSet<>(this.roleRepository.findAll());
     }
 
     @Override
-    public RoleServiceModel findByAuthority(String authority) {
-        return this.modelMapper.map(this.roleRepository.findByAuthority(authority), RoleServiceModel.class);
+    public Role findByAuthority(String authority) {
+        return this.roleRepository.findByAuthority(authority);
     }
 }

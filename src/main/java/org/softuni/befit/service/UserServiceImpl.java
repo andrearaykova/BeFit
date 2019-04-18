@@ -2,6 +2,7 @@ package org.softuni.befit.service;
 
 import org.modelmapper.ModelMapper;
 import org.softuni.befit.domain.entitites.User;
+import org.softuni.befit.domain.models.service.UserRegisterServiceModel;
 import org.softuni.befit.domain.models.service.UserServiceModel;
 import org.softuni.befit.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,29 +23,36 @@ public class UserServiceImpl implements UserService {
     private final RoleService roleService;
     private final ModelMapper modelMapper;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final CloudinaryService cloudinaryService;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleService roleService, ModelMapper modelMapper, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, RoleService roleService, ModelMapper modelMapper, BCryptPasswordEncoder bCryptPasswordEncoder, CloudinaryService cloudinaryService) {
         this.userRepository = userRepository;
         this.roleService = roleService;
         this.modelMapper = modelMapper;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.cloudinaryService = cloudinaryService;
     }
 
     @Override
-    public UserServiceModel registerUser(UserServiceModel userServiceModel) {
+    public UserServiceModel registerUser(UserRegisterServiceModel userRegisterServiceModel) throws IOException {
         this.roleService.seedRolesInDb();
+
+        User user = this.modelMapper.map(userRegisterServiceModel, User.class);
+        user.setPassword(
+                this.bCryptPasswordEncoder.encode(userRegisterServiceModel.getPassword())
+        );
+
+        String url = this.cloudinaryService.uploadImage(userRegisterServiceModel.getImage());
+        user.setImageUrl(url);
+
         if (this.userRepository.count() == 0) {
-            userServiceModel.setAuthorities(this.roleService.findAllRoles());
+            user.setAuthorities(this.roleService.findAllRoles());
         } else {
-            userServiceModel.setAuthorities(new LinkedHashSet<>());
+            user.setAuthorities(new LinkedHashSet<>());
 
-            userServiceModel.getAuthorities().add(this.roleService.findByAuthority("ROLE_USER"));
+            user.getAuthorities().add(this.roleService.findByAuthority("ROLE_USER"));
         }
-
-
-        User user = this.modelMapper.map(userServiceModel, User.class);
-        user.setPassword(this.bCryptPasswordEncoder.encode(userServiceModel.getPassword()));
 
         return this.modelMapper.map(this.userRepository.saveAndFlush(user), UserServiceModel.class);
     }
@@ -65,7 +74,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserServiceModel editUserProfile(UserServiceModel userServiceModel, String oldPassword) {
         User user = this.userRepository.findByUsername(userServiceModel.getUsername())
-                .orElseThrow(()-> new UsernameNotFoundException("Username not found!"));
+                .orElseThrow(() -> new UsernameNotFoundException("Username not found!"));
 
         if (!this.bCryptPasswordEncoder.matches(oldPassword, user.getPassword())) {
             throw new IllegalArgumentException("Incorrect password!");
@@ -89,24 +98,23 @@ public class UserServiceImpl implements UserService {
         User user = this.userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Incorrect id!"));
 
-        UserServiceModel userServiceModel = this.modelMapper.map(user, UserServiceModel.class);
-        userServiceModel.getAuthorities().clear();
+        user.getAuthorities().clear();
 
         switch (role) {
             case "user":
-                userServiceModel.getAuthorities().add(this.roleService.findByAuthority("ROLE_USER"));
+                user.getAuthorities().add(this.roleService.findByAuthority("ROLE_USER"));
                 break;
             case "moderator":
-                userServiceModel.getAuthorities().add(this.roleService.findByAuthority("ROLE_USER"));
-                userServiceModel.getAuthorities().add(this.roleService.findByAuthority("ROLE_MODERATOR"));
+                user.getAuthorities().add(this.roleService.findByAuthority("ROLE_USER"));
+                user.getAuthorities().add(this.roleService.findByAuthority("ROLE_MODERATOR"));
                 break;
             case "admin":
-                userServiceModel.getAuthorities().add(this.roleService.findByAuthority("ROLE_USER"));
-                userServiceModel.getAuthorities().add(this.roleService.findByAuthority("ROLE_MODERATOR"));
-                userServiceModel.getAuthorities().add(this.roleService.findByAuthority("ROLE_ADMIN"));
+                user.getAuthorities().add(this.roleService.findByAuthority("ROLE_USER"));
+                user.getAuthorities().add(this.roleService.findByAuthority("ROLE_MODERATOR"));
+                user.getAuthorities().add(this.roleService.findByAuthority("ROLE_ADMIN"));
                 break;
         }
 
-        this.userRepository.saveAndFlush(this.modelMapper.map(userServiceModel, User.class));
+        this.userRepository.saveAndFlush(this.modelMapper.map(user, User.class));
     }
 }

@@ -1,14 +1,8 @@
-package org.softuni.befit.domain.models.binding;
+package org.softuni.befit.domain.models.service;
 
-import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-
-@Component
-public class UserRegisterBindingModel {
+public class UserRegisterServiceModel {
 
     private String username;
     private String password;
@@ -16,40 +10,35 @@ public class UserRegisterBindingModel {
     private String email;
     private MultipartFile image;
 
-    public UserRegisterBindingModel() {
+    public UserRegisterServiceModel() {
     }
 
-    @NotEmpty
     public String getUsername() {
-        return username;
+        return this.username;
     }
 
     public void setUsername(String username) {
         this.username = username;
     }
 
-    @NotEmpty
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    @NotEmpty
     public String getConfirmPassword() {
-        return confirmPassword;
+        return this.confirmPassword;
     }
 
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }
 
-    @NotEmpty
-    @Email
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(String email) {

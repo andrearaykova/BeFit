@@ -15,6 +15,7 @@ public class User extends BaseEntity implements UserDetails {
     private String password;
     private String email;
     private List<Note> notes;
+    private String imageUrl;
 
     private Set<Role> authorities;
 
@@ -58,6 +59,14 @@ public class User extends BaseEntity implements UserDetails {
 
     public void setNotes(List<Note> notes) {
         this.notes = notes;
+    }
+
+    public String getImageUrl() {
+        return this.imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     @Override

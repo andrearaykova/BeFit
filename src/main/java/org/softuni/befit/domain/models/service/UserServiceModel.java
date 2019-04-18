@@ -7,6 +7,7 @@ public class UserServiceModel extends BaseServiceModel {
     private String username;
     private String password;
     private String email;
+    private String imageUrl;
 
     private Set<RoleServiceModel> authorities;
 
@@ -43,5 +44,13 @@ public class UserServiceModel extends BaseServiceModel {
 
     public void setAuthorities(Set<RoleServiceModel> authorities) {
         this.authorities = authorities;
+    }
+
+    public String getImageUrl() {
+        return this.imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

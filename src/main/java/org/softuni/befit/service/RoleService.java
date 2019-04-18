@@ -1,6 +1,6 @@
 package org.softuni.befit.service;
 
-import org.softuni.befit.domain.models.service.RoleServiceModel;
+import org.softuni.befit.domain.entitites.Role;
 
 import java.util.Set;
 
@@ -8,7 +8,7 @@ public interface RoleService {
 
     void seedRolesInDb();
 
-    Set<RoleServiceModel> findAllRoles();
+    Set<Role> findAllRoles();
 
-    RoleServiceModel findByAuthority(String authority);
+    Role findByAuthority(String authority);
 }

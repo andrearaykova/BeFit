@@ -2,6 +2,7 @@ package org.softuni.befit.domain.entitites;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -11,7 +12,7 @@ public class Exercise extends BaseEntity {
     private String name;
     private String description;
     private String videoURL;
-    private String muscleGroup;
+    private MuscleGroup muscleGroup;
 
     public Exercise() {
     }
@@ -43,12 +44,12 @@ public class Exercise extends BaseEntity {
         this.videoURL = videoURL;
     }
 
-    @Column(name = "muscle_group", nullable = false, unique = true)
-    public String getMuscleGroup() {
+    @ManyToOne(targetEntity = MuscleGroup.class)
+    public MuscleGroup getMuscleGroup() {
         return this.muscleGroup;
     }
 
-    public void setMuscleGroup(String muscleGroup) {
+    public void setMuscleGroup(MuscleGroup muscleGroup) {
         this.muscleGroup = muscleGroup;
     }
 }

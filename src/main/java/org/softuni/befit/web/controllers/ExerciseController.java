@@ -3,8 +3,10 @@ package org.softuni.befit.web.controllers;
 import org.modelmapper.ModelMapper;
 import org.softuni.befit.domain.models.binding.ExerciseBindingModel;
 import org.softuni.befit.domain.models.service.ExerciseServiceModel;
+import org.softuni.befit.domain.models.service.MuscleGroupServiceModel;
 import org.softuni.befit.domain.models.view.ExerciseViewModel;
 import org.softuni.befit.service.ExerciseService;
+import org.softuni.befit.service.MuscleGroupService;
 import org.softuni.befit.web.annotations.PageTitle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,17 +25,19 @@ public class ExerciseController extends BaseController {
 
     private final ModelMapper modelMapper;
     private final ExerciseService exerciseService;
+    private final MuscleGroupService muscleGroupService;
 
     @Autowired
-    public ExerciseController(ModelMapper modelMapper, ExerciseService exerciseService) {
+    public ExerciseController(ModelMapper modelMapper, ExerciseService exerciseService, MuscleGroupService muscleGroupService) {
         this.modelMapper = modelMapper;
         this.exerciseService = exerciseService;
+        this.muscleGroupService = muscleGroupService;
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("isAuthenticated()")
     @PageTitle("Exercise")
-    public ModelAndView exercise(ModelAndView modelAndView,@PathVariable("id") String id) {
+    public ModelAndView exercise(ModelAndView modelAndView, @PathVariable("id") String id) {
 
         List<ExerciseServiceModel> exerciseServiceModels = exerciseService.findAll();
         List<ExerciseViewModel> exerciseViewModels = exerciseServiceModels.stream()
@@ -46,8 +50,12 @@ public class ExerciseController extends BaseController {
 
     @GetMapping("/add")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView showExerciseView() {
-        return view("add-exercise");
+    public ModelAndView showExerciseView(ModelAndView modelAndView) {
+        List<MuscleGroupServiceModel> muscleGroupServiceModels = muscleGroupService.findAll();
+        List<String> muscleGroupName = muscleGroupServiceModels.stream().map(MuscleGroupServiceModel::getName).collect(Collectors.toList());
+
+        modelAndView.addObject("model", muscleGroupName);
+        return view("add-exercise", modelAndView);
     }
 
     @PostMapping("/add")

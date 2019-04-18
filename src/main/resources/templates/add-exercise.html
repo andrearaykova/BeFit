@@ -13,6 +13,27 @@
             <label for="add-product-name" class="font-weight-bold">Name</label>
             <input type="text" class="form-control text-center" id="add-product-name" name="name">
         </div>
+
+
+        <div class="form-group">
+            <label for="video" class="font-weight-bold">Video Url</label>
+            <input type="text" class="form-control text-center" id="video" name="videoURL">
+        </div>
+
+        <div class="form-group">
+            <label for="description" class="font-weight-bold">Description</label>
+            <textarea id="description" class="form-control rounded-0" name="description" rows="10"></textarea>
+        </div>
+        <label for="musclegroup">Muscle Group:</label>
+        <br>
+        <select name="muscleGroup" id="musclegroup">
+            <th:block th:each="musclegroup, iter : ${model}">
+                <option th:value="${musclegroup}" th:text="${musclegroup}"></option>
+            </th:block>
+        </select>
+
+        <br>
+        <br>
         <input type="submit" class="btn btn-outline-secondary" value="Add"/>
     </form>
 </main>

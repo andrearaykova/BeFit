@@ -53,14 +53,14 @@ public class MuscleGroupServiceImpl implements MuscleGroupService {
 
     @Override
     public MuscleGroupServiceModel editMuscleGroup(String id, MuscleGroupServiceModel muscleGroupServiceModel) {
-//        MuscleGroup muscleGroup = this.muscleGroupRepository.findById(id)
-//                .orElseThrow(() -> new NoSuchElementException("Muscle group with the given id was not found!"));
-//
-//
-//        muscleGroup.setName(muscleGroupServiceModel.getName());
-//
-//return this.modelMapper.map(this.muscleGroupRepository.saveAndFlush(muscleGroup), MuscleGroupServiceModel.class);
-        return null;
+        MuscleGroup muscleGroup = this.muscleGroupRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Muscle group with the given id was not found!"));
+
+
+        muscleGroup.setName(muscleGroupServiceModel.getName());
+
+        return this.modelMapper.map(this.muscleGroupRepository.saveAndFlush(muscleGroup), MuscleGroupServiceModel.class);
+
     }
 
     @Override
@@ -74,5 +74,11 @@ public class MuscleGroupServiceImpl implements MuscleGroupService {
         return true;
     }
 
+    @Override
+    public Optional<MuscleGroupServiceModel> findByName(String name) {
+        return muscleGroupRepository.findByName(name)
+                .map(m -> modelMapper.map(m, MuscleGroupServiceModel.class));
+
+    }
 
 }
