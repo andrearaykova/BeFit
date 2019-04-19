@@ -1,9 +1,6 @@
 package org.softuni.befit.domain.entitites;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.text.DateFormat;
 
 @Entity
@@ -12,8 +9,7 @@ public class Note extends BaseEntity {
 
     private String name;
     private String description;
-
-
+    private Exercise exercise;
 
     public Note() {
     }
@@ -36,4 +32,12 @@ public class Note extends BaseEntity {
         this.description = description;
     }
 
+    @ManyToOne(targetEntity = Exercise.class)
+    public Exercise getExercise() {
+        return this.exercise;
+    }
+
+    public void setExercise(Exercise exercise) {
+        this.exercise = exercise;
+    }
 }

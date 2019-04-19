@@ -17,5 +17,5 @@ public interface MuscleGroupService {
 
     boolean deleteMuscleGroup(String id);
 
-   Optional<MuscleGroupServiceModel> findByName(String name);
+    Optional<MuscleGroupServiceModel> findByName(String name);
 }

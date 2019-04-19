@@ -1,14 +1,13 @@
 package org.softuni.befit.service;
 
 import org.modelmapper.ModelMapper;
-import org.softuni.befit.domain.entitites.Exercise;
 import org.softuni.befit.domain.entitites.Note;
-import org.softuni.befit.domain.models.service.ExerciseServiceModel;
 import org.softuni.befit.domain.models.service.NoteServiceModel;
 import org.softuni.befit.repository.NoteRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -16,10 +15,12 @@ public class NoteServiceImpl implements NoteService {
 
     private final NoteRepository noteRepository;
     private final ModelMapper modelMapper;
+    private final ExerciseService exerciseService;
 
-    public NoteServiceImpl(NoteRepository noteRepository, ModelMapper modelMapper) {
+    public NoteServiceImpl(NoteRepository noteRepository, ModelMapper modelMapper, ExerciseService exerciseService) {
         this.noteRepository = noteRepository;
         this.modelMapper = modelMapper;
+        this.exerciseService = exerciseService;
     }
 
 
@@ -42,5 +43,12 @@ public class NoteServiceImpl implements NoteService {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public NoteServiceModel findById(String id) {
+        Note note = noteRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Note not found"));
+        return this.modelMapper.map(note, NoteServiceModel.class);
     }
 }

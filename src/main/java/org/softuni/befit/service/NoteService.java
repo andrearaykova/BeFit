@@ -9,4 +9,6 @@ public interface NoteService {
     List<NoteServiceModel> findAll();
 
     boolean save(NoteServiceModel noteServiceModel);
+
+    NoteServiceModel findById(String id);
 }

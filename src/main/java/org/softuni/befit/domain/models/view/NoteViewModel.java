@@ -4,6 +4,7 @@ public class NoteViewModel {
 
     private String name;
     private String description;
+    private String exercise;
 
     public NoteViewModel() {
     }
@@ -24,4 +25,11 @@ public class NoteViewModel {
         this.description = description;
     }
 
+    public String getExercise() {
+        return this.exercise;
+    }
+
+    public void setExercise(String exercise) {
+        this.exercise = exercise;
+    }
 }

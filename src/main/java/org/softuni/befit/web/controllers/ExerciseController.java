@@ -50,6 +50,7 @@ public class ExerciseController extends BaseController {
 
     @GetMapping("/add")
     @PreAuthorize("isAuthenticated()")
+    @PageTitle("Exercise")
     public ModelAndView showExerciseView(ModelAndView modelAndView) {
         List<MuscleGroupServiceModel> muscleGroupServiceModels = muscleGroupService.findAll();
         List<String> muscleGroupName = muscleGroupServiceModels.stream().map(MuscleGroupServiceModel::getName).collect(Collectors.toList());
