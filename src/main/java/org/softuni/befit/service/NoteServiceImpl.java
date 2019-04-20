@@ -2,7 +2,9 @@ package org.softuni.befit.service;
 
 import org.modelmapper.ModelMapper;
 import org.softuni.befit.domain.entitites.Note;
+import org.softuni.befit.domain.entitites.User;
 import org.softuni.befit.domain.models.service.NoteServiceModel;
+import org.softuni.befit.domain.models.service.UserServiceModel;
 import org.softuni.befit.repository.NoteRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +17,13 @@ public class NoteServiceImpl implements NoteService {
 
     private final NoteRepository noteRepository;
     private final ModelMapper modelMapper;
-    private final ExerciseService exerciseService;
+    private final UserService userService;
 
-    public NoteServiceImpl(NoteRepository noteRepository, ModelMapper modelMapper, ExerciseService exerciseService) {
+
+    public NoteServiceImpl(NoteRepository noteRepository, ModelMapper modelMapper, UserService userService) {
         this.noteRepository = noteRepository;
         this.modelMapper = modelMapper;
-        this.exerciseService = exerciseService;
+        this.userService = userService;
     }
 
 
@@ -28,14 +31,20 @@ public class NoteServiceImpl implements NoteService {
     public List<NoteServiceModel> findAll() {
 
         List<Note> notes = noteRepository.findAll();
-        return notes.stream().map(note -> this.modelMapper
+        List<NoteServiceModel> u = notes.stream().map(note -> this.modelMapper
                 .map(note, NoteServiceModel.class)).collect(Collectors.toList());
 
+
+        return u;
     }
 
     @Override
     public boolean save(NoteServiceModel noteServiceModel) {
+
+        UserServiceModel userServiceModel = userService.findUserByUserName(noteServiceModel.getAuthorName());
         Note note = this.modelMapper.map(noteServiceModel, Note.class);
+        User user = this.modelMapper.map(userServiceModel, User.class);
+        note.setAuthor(user);
 
         try {
             noteRepository.save(note);
@@ -46,9 +55,20 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
+    public List<NoteServiceModel> findByAuthorName(String name) {
+        UserServiceModel userServiceModel = userService.findUserByUserName(name);
+        User user = this.modelMapper.map(userServiceModel, User.class);
+        List<Note> notes = noteRepository.findByAuthor(user);
+
+        return notes.stream().map(n -> this.modelMapper.map(n, NoteServiceModel.class)).collect(Collectors.toList());
+
+    }
+
+    @Override
     public NoteServiceModel findById(String id) {
-        Note note = noteRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Note not found"));
+        Note note = noteRepository.findById(id).orElseThrow(() -> new NoSuchElementException("No such note found"));
         return this.modelMapper.map(note, NoteServiceModel.class);
     }
+
+
 }

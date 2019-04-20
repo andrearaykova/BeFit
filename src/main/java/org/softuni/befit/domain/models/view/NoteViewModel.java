@@ -2,11 +2,19 @@ package org.softuni.befit.domain.models.view;
 
 public class NoteViewModel {
 
+    private String id;
     private String name;
     private String description;
-    private String exercise;
 
     public NoteViewModel() {
+    }
+
+    public String getId() {
+        return this.id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -23,13 +31,5 @@ public class NoteViewModel {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getExercise() {
-        return this.exercise;
-    }
-
-    public void setExercise(String exercise) {
-        this.exercise = exercise;
     }
 }

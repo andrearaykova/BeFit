@@ -10,5 +10,7 @@ public interface NoteService {
 
     boolean save(NoteServiceModel noteServiceModel);
 
+    List<NoteServiceModel> findByAuthorName(String name);
+
     NoteServiceModel findById(String id);
 }

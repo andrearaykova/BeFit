@@ -13,7 +13,7 @@
            th:href="@{/note/add}">Add Note</a>
 
         <th:block th:each="note, iter : ${model}">
-            <a th:utext="${note.name}" th:href="@{|/exercise/${note.id}|}" class="list-group-item list-group-item-action active"></a>
+            <a th:utext="${note.name}" th:href="@{|/note/${note.id}|}" class="list-group-item list-group-item-action active"></a>
             <!--<a th:utext="${note.description}" href="#" class="list-group-item list-group-item-action active"></a>-->
         </th:block>
     </div>

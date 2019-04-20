@@ -9,7 +9,7 @@ public class Note extends BaseEntity {
 
     private String name;
     private String description;
-    private Exercise exercise;
+    private User author;
 
     public Note() {
     }
@@ -32,12 +32,12 @@ public class Note extends BaseEntity {
         this.description = description;
     }
 
-    @ManyToOne(targetEntity = Exercise.class)
-    public Exercise getExercise() {
-        return this.exercise;
+    @ManyToOne(targetEntity = User.class)
+    public User getAuthor() {
+        return this.author;
     }
 
-    public void setExercise(Exercise exercise) {
-        this.exercise = exercise;
+    public void setAuthor(User author) {
+        this.author = author;
     }
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,12 +35,12 @@ public class NoteController extends BaseController {
         this.exerciseService = exerciseService;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping()
     @PreAuthorize("isAuthenticated()")
     @PageTitle("Note")
-    public ModelAndView note(ModelAndView modelAndView, @PathVariable("id") String id) {
+    public ModelAndView showAllNote(ModelAndView modelAndView, Principal principal) {
 
-        List<NoteServiceModel> noteServiceModels = noteService.findAll();
+        List<NoteServiceModel> noteServiceModels = noteService.findByAuthorName(principal.getName());
         List<NoteViewModel> noteViewModels = noteServiceModels.stream()
                 .map(n -> this.modelMapper.map(n, NoteViewModel.class))
                 .collect(Collectors.toList());
@@ -48,22 +49,32 @@ public class NoteController extends BaseController {
         return view("note", modelAndView);
     }
 
+    @GetMapping("/{id}")
+    @PreAuthorize("isAuthenticated()")
+    @PageTitle("Note")
+    public ModelAndView noteDescription(ModelAndView modelAndView, @PathVariable("id") String id) {
+
+       NoteServiceModel noteServiceModel = noteService.findById(id);
+       NoteViewModel noteViewModel = this.modelMapper.map(noteServiceModel,NoteViewModel.class);
+        modelAndView.addObject("model",noteViewModel);
+        return view("note-details",modelAndView);
+    }
+
+
     @GetMapping("/add")
     @PreAuthorize("isAuthenticated()")
     @PageTitle("Note")
     public ModelAndView showNoteView(ModelAndView modelAndView) {
-        List<ExerciseServiceModel> exerciseServiceModels = exerciseService.findAll();
-        List<String> exerciseDescription = exerciseServiceModels.stream().map(ExerciseServiceModel::getDescription).collect(Collectors.toList());
-
-        modelAndView.addObject("model", exerciseDescription);
-        return view("add-note",modelAndView);
+        return view("add-note");
     }
 
     @PostMapping("/add")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView addNote(@ModelAttribute @Valid NoteBindingModel noteBindingModel, Errors errors) {
+    public ModelAndView addNote(@ModelAttribute @Valid NoteBindingModel noteBindingModel, Errors errors, Principal principal) {
 
-        boolean isSaved = noteService.save(this.modelMapper.map(noteBindingModel, NoteServiceModel.class));
+        NoteServiceModel noteServiceModel = this.modelMapper.map(noteBindingModel, NoteServiceModel.class);
+        noteServiceModel.setAuthorName(principal.getName());
+        boolean isSaved = noteService.save(noteServiceModel);
 
         if (errors.hasErrors() || !isSaved) {
             return redirect("/note/add");
@@ -71,5 +82,6 @@ public class NoteController extends BaseController {
 
         return redirect("/note");
     }
+
 
 }

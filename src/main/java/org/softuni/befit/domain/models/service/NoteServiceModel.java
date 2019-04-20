@@ -2,9 +2,10 @@ package org.softuni.befit.domain.models.service;
 
 public class NoteServiceModel extends BaseServiceModel {
 
+    private String id;
     private String name;
     private String description;
-    private String exercise;
+    private String authorName;
 
     public NoteServiceModel() {
     }
@@ -25,11 +26,11 @@ public class NoteServiceModel extends BaseServiceModel {
         this.description = description;
     }
 
-    public String getExercise() {
-        return this.exercise;
+    public String getAuthorName() {
+        return this.authorName;
     }
 
-    public void setExercise(String exercise) {
-        this.exercise = exercise;
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
     }
 }
