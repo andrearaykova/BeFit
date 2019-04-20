@@ -12,5 +12,5 @@ public interface ExerciseService {
 
     boolean save(ExerciseServiceModel exerciseServiceModel);
 
-
+    ExerciseServiceModel findById(String id);
 }

@@ -1,13 +1,23 @@
 package org.softuni.befit.domain.models.view;
 
+
 public class ExerciseViewModel {
 
+    private String id;
     private String name;
     private String description;
     private String videoURL;
     private String muscleGroup;
 
     public ExerciseViewModel() {
+    }
+
+    public String getId() {
+        return this.id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {

@@ -48,6 +48,16 @@ public class ExerciseController extends BaseController {
         return view("exercise", modelAndView);
     }
 
+    @GetMapping("/details/{id}")
+    @PreAuthorize("isAuthenticated()")
+    public ModelAndView exerciseDescription(ModelAndView modelAndView, @PathVariable("id") String id) {
+
+        ExerciseServiceModel exerciseServiceModel = exerciseService.findById(id);
+        ExerciseViewModel exerciseViewModel = this.modelMapper.map(exerciseServiceModel,ExerciseViewModel.class);
+        modelAndView.addObject("model",exerciseViewModel);
+        return view("exercise-details",modelAndView);
+    }
+
     @GetMapping("/add")
     @PreAuthorize("isAuthenticated()")
     @PageTitle("Exercise")

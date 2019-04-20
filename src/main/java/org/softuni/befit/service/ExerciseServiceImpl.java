@@ -7,6 +7,7 @@ import org.softuni.befit.repository.ExerciseRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,5 +43,11 @@ public class ExerciseServiceImpl implements ExerciseService {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public ExerciseServiceModel findById(String id) {
+       Exercise exercise = exerciseRepository.findById(id).orElseThrow(() -> new NoSuchElementException("No such note found"));
+        return this.modelMapper.map(exercise, ExerciseServiceModel.class);
     }
 }
