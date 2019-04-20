@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:include="~{fragments/head}"/>
+    <script th:src="@{/js/comment-script.js}"></script>
+</head>
+<body>
+<header>
+    <th:block th:include="~{fragments/navbar}"/>
+</header>
+<main class="mt-3">
+    <div class="list-group">
+        <th:block th:object="${model}">
+            <h3 class="text-center" th:text="*{name}"></h3>
+            <p class="text-center" th:text="*{description}"></p>
+        </th:block>
+        <div class="text-center">
+            <form id="form" th:method="POST" th:action="@{|/comment/*{id}|}">
+                <div>
+                    <p>Leave a comment:</p>
+                    <p class="error" id="error">The comment must be between 1 and 255 words</p>
+                    <textarea id="comment" name="comment" maxlength="255" rows="4"></textarea>
+                    <input type="submit" value="Comment"/>
+                </div>
+                <p></p>
+                <div id="listingTable" class="comments"></div>
+                <a href="javascript:prevPage()" id="btn_prev">Previous</a>
+                <a href="javascript:nextPage()" id="btn_next">Next</a>
+                page: <span id="page"></span>
+            </form>
+        </div>
+    </div>
+</main>
+<footer>
+    <th:block th:include="~{fragments/footer}"/>
+</footer>
+</body>
+</html>
