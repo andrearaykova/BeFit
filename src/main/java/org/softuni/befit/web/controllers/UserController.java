@@ -3,6 +3,7 @@ package org.softuni.befit.web.controllers;
 import org.modelmapper.ModelMapper;
 import org.softuni.befit.domain.models.binding.UserEditBindingModel;
 import org.softuni.befit.domain.models.binding.UserRegisterBindingModel;
+import org.softuni.befit.domain.models.service.RoleServiceModel;
 import org.softuni.befit.domain.models.service.UserRegisterServiceModel;
 import org.softuni.befit.domain.models.service.UserServiceModel;
 import org.softuni.befit.domain.models.view.UserAllViewModel;
@@ -98,7 +99,7 @@ public class UserController extends BaseController {
                 .stream()
                 .map(u -> {
                     UserAllViewModel user = this.modelMapper.map(u, UserAllViewModel.class);
-                    user.setAuthorities(u.getAuthorities().stream().map(a -> a.getAuthority()).collect(Collectors.toSet()));
+                    user.setAuthorities(u.getAuthorities().stream().map(RoleServiceModel::getAuthority).collect(Collectors.toSet()));
 
                     return user;
                 })

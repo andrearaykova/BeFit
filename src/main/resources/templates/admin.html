@@ -1,0 +1,54 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:include="~{fragments/head}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin-style}"/>
+</head>
+<body>
+<header>
+    <th:block th:include="~{fragments/navbar}"/>
+</header>
+<main>
+    <!--<th:block th:if="${(param.error != null) and (param.error[0] == 'true')}">-->
+        <!--<div id="error" class="error">-->
+            <!--<p>Error! Please try again later!</p>-->
+        <!--</div>-->
+    <!--</th:block>-->
+    <table>
+        <th:block th:each="user, iter : ${model}">
+            <tr>
+                <!--<th th:text="${user.username}">Firstname</th>-->
+                <!--<th th:text="${user.email}">Lastname</th>-->
+                <th:block th:unless="${#authentication.principal.username == user.username}">
+                    <th:block th:unless="${#lists.contains(user.authorities, 'ROLE_ROOT')}">
+                        <th:block th:if="${#lists.contains(user.authorities, 'ROLE_ADMIN')}">
+                            <th><a th:href="@{|/users/setAuth/ROLE_USER/${user.id}|}">Make USER</a></th>
+                            <th><a th:href="@{|/users/setAuth/ROLE_MODERATOR/${user.id}|}">Make MODERATOR</a></th>
+                        </th:block>
+                        <th:block th:if="${#lists.contains(user.authorities, 'ROLE_MODERATOR')}">
+                            <th:block th:unless="${#lists.contains(user.authorities, 'ROLE_ADMIN')}">
+                                <th><a th:href="@{|/users/setAuth/ROLE_USER/${user.id}|}">Make USER</a></th>
+                                <th><a th:href="@{|/users/setAuth/ROLE_ADMIN/${user.id}|}">Make ADMIN</a></th>
+                            </th:block>
+                        </th:block>
+                        <th:block th:if="${#lists.contains(user.authorities, 'ROLE_USER')}">
+                            <th:block th:unless="${#lists.contains(user.authorities, 'ROLE_ADMIN')}">
+                                <th:block th:unless="${#lists.contains(user.authorities, 'ROLE_MODERATOR')}">
+                                    <th><a th:href="@{|/users/setAuth/ROLE_MODERATOR/${user.id}|}">Make MODERATOR</a>
+                                    </th>
+                                    <th><a th:href="@{|/users/setAuth/ROLE_ADMIN/${user.id}|}">Make ADMIN</a></th>
+                                </th:block>
+                            </th:block>
+                        </th:block>
+                    </th:block>
+                </th:block>
+            </tr>
+        </th:block>
+    </table>
+</main>
+<footer>
+    <th:block th:include="~{fragments/footer}"/>
+</footer>
+</body>
+
+</html>
