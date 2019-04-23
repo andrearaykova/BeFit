@@ -1,6 +1,7 @@
 package org.softuni.befit.web.controllers;
 
 import org.modelmapper.ModelMapper;
+import org.softuni.befit.domain.entitites.Role;
 import org.softuni.befit.domain.models.binding.UserEditBindingModel;
 import org.softuni.befit.domain.models.binding.UserRegisterBindingModel;
 import org.softuni.befit.domain.models.service.RoleServiceModel;
@@ -20,6 +21,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
@@ -110,27 +112,41 @@ public class UserController extends BaseController {
         return super.view("all-users", modelAndView);
     }
 
-    @PostMapping("/set-user/{id}")
+    @GetMapping("/admin")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ModelAndView setUser(@PathVariable String id) {
-        this.userService.setUserRole(id, "user");
+    public ModelAndView showAdminPage(ModelAndView modelAndView){
+        List<UserServiceModel> userServiceModels = this.userService.findAllUsers();
 
-        return super.redirect("/users/all");
+        List<UserAllViewModel> users =
+                userServiceModels
+                        .stream()
+                        .map(u -> {
+                            UserAllViewModel v = this.modelMapper.map(u, UserAllViewModel.class);
+                            Set<String> authorities = u.getAuthorities()
+                                    .stream()
+                                    .map(RoleServiceModel::getAuthority)
+                                    .collect(Collectors.toSet());
+
+                            v.setAuthorities(authorities);
+                            return v;
+                        })
+                        .collect(Collectors.toList());
+
+        modelAndView.addObject("model", users);
+
+        return view("admin", modelAndView);
     }
 
-    @PostMapping("/set-moderator/{id}")
+    @GetMapping("/setAuth/{role}/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ModelAndView setModerator(@PathVariable String id) {
-        this.userService.setUserRole(id, "moderator");
+    public ModelAndView setRole(
+            @PathVariable("role") String role,
+            @PathVariable("id") String id
+    ){
+        if(!this.userService.setUserRole(id,role)){
+            return redirect("/users/admin?error=true");
+        }
 
-        return super.redirect("/users/all");
-    }
-
-    @PostMapping("/set-admin/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ModelAndView setAdmin(@PathVariable String id) {
-        this.userService.setUserRole(id, "admin");
-
-        return super.redirect("/users/all");
+        return redirect("/users/admin");
     }
 }

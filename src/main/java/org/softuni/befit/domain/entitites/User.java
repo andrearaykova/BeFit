@@ -14,14 +14,9 @@ public class User extends BaseEntity implements UserDetails {
     private String username;
     private String password;
     private String email;
-    private List<Note> notes;
     private String imageUrl;
 
     private Set<Role> authorities;
-
-    public User() {
-        this.notes = new ArrayList<>();
-    }
 
     @Override
     @Column(name = "username", nullable = false, unique = true, updatable = false)
@@ -50,15 +45,6 @@ public class User extends BaseEntity implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    @OneToMany
-    public List<Note> getNotes() {
-        return this.notes;
-    }
-
-    public void setNotes(List<Note> notes) {
-        this.notes = notes;
     }
 
     public String getImageUrl() {

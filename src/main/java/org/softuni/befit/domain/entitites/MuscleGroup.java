@@ -12,10 +12,8 @@ import java.util.List;
 public class MuscleGroup extends BaseEntity {
 
     private String name;
-    private List<Exercise> exercises;
 
     public MuscleGroup() {
-        this.exercises = new ArrayList<>();
     }
 
     @Column(nullable = false)
@@ -25,14 +23,5 @@ public class MuscleGroup extends BaseEntity {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    @OneToMany(targetEntity = Exercise.class)
-    public List<Exercise> getExercises() {
-        return this.exercises;
-    }
-
-    public void setExercises(List<Exercise> exercises) {
-        this.exercises = exercises;
     }
 }

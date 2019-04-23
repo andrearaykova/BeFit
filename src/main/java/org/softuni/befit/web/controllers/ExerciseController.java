@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Controller
@@ -39,7 +40,7 @@ public class ExerciseController extends BaseController {
     @PageTitle("Exercise")
     public ModelAndView exercise(ModelAndView modelAndView, @PathVariable("id") String id) {
 
-        List<ExerciseServiceModel> exerciseServiceModels = exerciseService.findAll();
+        List<ExerciseServiceModel> exerciseServiceModels = exerciseService.findByMuscleGroup(id);
         List<ExerciseViewModel> exerciseViewModels = exerciseServiceModels.stream()
                 .map(ex -> this.modelMapper.map(ex, ExerciseViewModel.class))
                 .collect(Collectors.toList());
@@ -73,13 +74,16 @@ public class ExerciseController extends BaseController {
     @PreAuthorize("isAuthenticated()")
     public ModelAndView addExercise(@ModelAttribute @Valid ExerciseBindingModel exerciseBindingModel, Errors errors) {
 
+        MuscleGroupServiceModel m = muscleGroupService.findByName(exerciseBindingModel.getMuscleGroup())
+                .orElseThrow(() -> new NoSuchElementException("Muscle group not found"));
+
         boolean isSaved = exerciseService.save(this.modelMapper.map(exerciseBindingModel, ExerciseServiceModel.class));
 
         if (errors.hasErrors() || !isSaved) {
             return redirect("/exercise/add");
         }
 
-        return redirect("/exercise");
+        return redirect("/exercise/" + m.getId());
     }
 
 }

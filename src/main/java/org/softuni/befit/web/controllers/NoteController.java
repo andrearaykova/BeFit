@@ -83,5 +83,15 @@ public class NoteController extends BaseController {
         return redirect("/note");
     }
 
+    @GetMapping("/delete/{id}")
+    @PreAuthorize("isAuthenticated()")
+    public ModelAndView deletePeak(
+            @PathVariable("id") String id
+    ) {
+        this.noteService.deletePeak(id);
+
+        return redirect("/note");
+    }
+
 
 }

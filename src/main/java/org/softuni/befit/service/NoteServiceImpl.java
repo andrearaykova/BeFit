@@ -70,5 +70,14 @@ public class NoteServiceImpl implements NoteService {
         return this.modelMapper.map(note, NoteServiceModel.class);
     }
 
+    @Override
+    public boolean deletePeak(String id){
+        try {
+            this.noteRepository.deleteById(id);
+        } catch (Exception e){
+            return false;
+        }
 
+        return true;
+    }
 }

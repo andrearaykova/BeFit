@@ -14,12 +14,10 @@ import java.util.Set;
 public class RoleServiceImpl implements RoleService {
 
     private final RoleRepository roleRepository;
-    private final ModelMapper modelMapper;
 
     @Autowired
-    public RoleServiceImpl(RoleRepository roleRepository, ModelMapper modelMapper) {
+    public RoleServiceImpl(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
-        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -31,18 +29,6 @@ public class RoleServiceImpl implements RoleService {
             this.roleRepository.saveAndFlush(new Role("ROLE_ROOT"));
         }
     }
-
-//    @Override
-//    public void assignUserRoles(UserServiceModel userServiceModel, long numberOfUsers) {
-//        if (numberOfUsers == 0) {
-//            userServiceModel
-//                    .setAuthorities(this.roleRepository
-//                            .findAll()
-//                            .stream()
-//                            .map(r -> this.modelMapper.map(r, RoleServiceModel.class))
-//                            .collect(Collectors.toSet()));
-//        }
-//    }
 
 
     @Override

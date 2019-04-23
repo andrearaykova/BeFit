@@ -2,23 +2,28 @@
 
 <head>
     <th:block th:include="~{fragments/head}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/admin-style}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin-style.css}"/>
 </head>
 <body>
 <header>
     <th:block th:include="~{fragments/navbar}"/>
 </header>
 <main>
-    <!--<th:block th:if="${(param.error != null) and (param.error[0] == 'true')}">-->
-        <!--<div id="error" class="error">-->
-            <!--<p>Error! Please try again later!</p>-->
-        <!--</div>-->
-    <!--</th:block>-->
+    <th:block th:if="${(param.error != null) and (param.error[0] == 'true')}">
+        <div id="error" class="error">
+            <p>Грешка! Пробвайте отново по-късно!</p>
+        </div>
+    </th:block>
     <table>
         <th:block th:each="user, iter : ${model}">
             <tr>
-                <!--<th th:text="${user.username}">Firstname</th>-->
-                <!--<th th:text="${user.email}">Lastname</th>-->
+                <th th:text="${user.username}">Firstname</th>
+                <th th:text="${user.email}">Lastname</th>
+                <th:block th:each="authority, iter : ${user.authorities}">
+                    <th:block th:unless="${authority == 'ROLE_FREELANCER'}">
+                        <th th:text="${authority}"></th>
+                    </th:block>
+                </th:block>
                 <th:block th:unless="${#authentication.principal.username == user.username}">
                     <th:block th:unless="${#lists.contains(user.authorities, 'ROLE_ROOT')}">
                         <th:block th:if="${#lists.contains(user.authorities, 'ROLE_ADMIN')}">

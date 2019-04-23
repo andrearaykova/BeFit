@@ -41,6 +41,11 @@ public class ExerciseViewModel {
     }
 
     public void setVideoURL(String videoURL) {
+        //https://www.youtube.com/watch?v=BplsGX5eLLo
+        int lastIndex = videoURL.lastIndexOf("=");
+        String videoCode = videoURL.substring(lastIndex + 1);
+
+        videoURL = "https://www.youtube.com/embed/" + videoCode;
         this.videoURL = videoURL;
     }
 

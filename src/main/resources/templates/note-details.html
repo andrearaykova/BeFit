@@ -12,6 +12,7 @@
         <th:block th:object="${model}">
             <h3 class="text-center" th:text="*{name}"></h3>
             <p class="text-center" th:text="*{description}"></p>
+            <a class="text-center text-danger" th:href="@{|/note/delete/*{id}|}">Delete</a>
         </th:block>
     </div>
 </main>

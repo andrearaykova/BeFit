@@ -13,4 +13,6 @@ public interface NoteService {
     List<NoteServiceModel> findByAuthorName(String name);
 
     NoteServiceModel findById(String id);
+
+    boolean deletePeak(String id);
 }

@@ -1,9 +1,6 @@
 package org.softuni.befit.domain.entitites;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "exercises")

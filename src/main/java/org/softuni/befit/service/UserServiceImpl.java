@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,8 +44,10 @@ public class UserServiceImpl implements UserService {
                 this.bCryptPasswordEncoder.encode(userRegisterServiceModel.getPassword())
         );
 
-        String url = this.cloudinaryService.uploadImage(userRegisterServiceModel.getImage());
-        user.setImageUrl(url);
+        if (!Objects.equals(userRegisterServiceModel.getImage().getOriginalFilename(), "")) {
+            String url = this.cloudinaryService.uploadImage(userRegisterServiceModel.getImage());
+            user.setImageUrl(url);
+        }
 
         if (this.userRepository.count() == 0) {
             user.setAuthorities(this.roleService.findAllRoles());
@@ -94,27 +97,33 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void setUserRole(String id, String role) {
+    public boolean setUserRole(String id, String role) {
         User user = this.userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Incorrect id!"));
 
         user.getAuthorities().clear();
 
         switch (role) {
-            case "user":
+            case "ROLE_USER":
                 user.getAuthorities().add(this.roleService.findByAuthority("ROLE_USER"));
                 break;
-            case "moderator":
+            case "ROLE_MODERATOR":
                 user.getAuthorities().add(this.roleService.findByAuthority("ROLE_USER"));
                 user.getAuthorities().add(this.roleService.findByAuthority("ROLE_MODERATOR"));
                 break;
-            case "admin":
+            case "ROLE_ADMIN":
                 user.getAuthorities().add(this.roleService.findByAuthority("ROLE_USER"));
                 user.getAuthorities().add(this.roleService.findByAuthority("ROLE_MODERATOR"));
                 user.getAuthorities().add(this.roleService.findByAuthority("ROLE_ADMIN"));
                 break;
         }
 
-        this.userRepository.saveAndFlush(this.modelMapper.map(user, User.class));
+        try {
+            this.userRepository.saveAndFlush(this.modelMapper.map(user, User.class));
+        } catch (Exception e) {
+            return false;
+        }
+
+        return true;
     }
 }

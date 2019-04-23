@@ -24,3 +24,24 @@ img.img-thumbnail {
     max-width: 40px;
     max-height: 40px;
 }
+
+.embed-responsive{
+    width: 40em;
+    margin: 0 auto;
+}
+
+div#listingTable p {
+    padding: 0.5em;
+    background-color: lightcyan;
+    width: 15em;
+    margin: 1em auto;
+    border-radius: 10px;
+}
+
+.commentDescription{
+    margin: 1em auto;
+}
+
+img.profileImg {
+    width: 15em;
+}

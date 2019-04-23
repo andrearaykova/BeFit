@@ -12,9 +12,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Controller
+@RestController
 @RequestMapping("/comment")
 public class CommentApiController extends BaseController {
 
@@ -42,6 +45,7 @@ public class CommentApiController extends BaseController {
             @PathVariable("id") String id) {
 
         List<CommentServiceModel> comments = this.commentService.findAll(id);
+        comments.sort(Comparator.comparing(CommentServiceModel::getComment));
 
         return new Gson().toJson(comments);
     }
